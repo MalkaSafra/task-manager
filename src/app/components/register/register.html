@@ -1,0 +1,106 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon class="auth-icon">person_add</mat-icon>
+        <span>Create Account</span>
+      </mat-card-title>
+      <mat-card-subtitle>Join us today</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (authStore.hasAuthError()) {
+        <div class="error-alert" (click)="authService.clearError()">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ authStore.authError() }}</span>
+          <mat-icon class="close-icon">close</mat-icon>
+        </div>
+      }
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input 
+            matInput 
+            formControlName="name" 
+            type="text" 
+            placeholder="Enter your full name"
+          />
+          <mat-icon matPrefix>person</mat-icon>
+          @if (registerForm.get('name')?.hasError('required') && registerForm.get('name')?.touched) {
+            <mat-error>Full name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input 
+            matInput 
+            formControlName="email" 
+            type="email" 
+            placeholder="Enter your email"
+            autocomplete="email"
+          />
+          <mat-icon matPrefix>email</mat-icon>
+          @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+            <mat-error>Please enter a valid email</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input 
+            matInput 
+            formControlName="password" 
+            [type]="hidePassword ? 'password' : 'text'" 
+            placeholder="Create a password"
+            autocomplete="new-password"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            type="button"
+            (click)="hidePassword = !hidePassword"
+          >
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
+            <mat-error>Password must be at least 6 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <button 
+          mat-raised-button 
+          color="primary" 
+          type="submit" 
+          class="submit-btn"
+          [disabled]="registerForm.invalid || authStore.authLoading()"
+        >
+          @if (authStore.authLoading()) {
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Creating account...</span>
+          } @else {
+            <ng-container>
+              <mat-icon>person_add</mat-icon>
+              <span>Create Account</span>
+            </ng-container>
+          }
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <p class="auth-link">
+        Already have an account? 
+        <a routerLink="/login">Sign in</a>
+      </p>
+    </mat-card-actions>
+  </mat-card>
+</div>

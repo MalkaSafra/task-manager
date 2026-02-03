@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+
+<mat-dialog-content>
+  <mat-form-field style="width: 100%;">
+    <mat-label>project</mat-label>
+    <mat-select [(ngModel)]="projectId" placeholder="select a project" [disabled]="isEditMode">
+      @for (project of projects; track project.id) {
+        <mat-option [value]="project.id">{{ project.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>title</mat-label>
+    <input matInput [(ngModel)]="title" placeholder="enter a task title" />
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>description (optional)</mat-label>
+    <textarea matInput [(ngModel)]="description" placeholder="enter a description" rows="3"></textarea>
+  </mat-form-field>
+
+  <div class="row">
+    <mat-form-field>
+      <mat-label>status</mat-label>
+      <mat-select [(ngModel)]="status">
+        @for (s of statuses; track s.value) {
+          <mat-option [value]="s.value">{{ s.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>priority</mat-label>
+      <mat-select [(ngModel)]="priority">
+        @for (p of priorities; track p.value) {
+          <mat-option [value]="p.value">{{ p.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>due date (optional)</mat-label>
+    <input  matInput [matDatepicker]="picker" [(ngModel)]="dueDate" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="getResult()" [disabled]="!projectId || !title">
+    {{ submitButtonText }}
+  </button>
+</mat-dialog-actions>

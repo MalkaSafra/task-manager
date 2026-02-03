@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>add team</h2>
+
+<mat-dialog-content>
+  <mat-form-field style="width: 100%;">
+    <mat-label>team name</mat-label>
+    <input matInput [(ngModel)]="teamName" placeholder="enter a team name" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="teamName" [disabled]="!teamName">
+    add
+  </button>
+</mat-dialog-actions>

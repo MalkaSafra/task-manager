@@ -1,0 +1,29 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 400px;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.row mat-form-field {
+  flex: 1;
+  min-width: 0;
+}
+
+mat-dialog-actions {
+  padding: 16px 0;
+}
+
+mat-dialog-actions button {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

@@ -1,0 +1,81 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>My Teams</h1>
+      <p class="subtitle">Manage your teams and collaborate with members</p>
+    </div>
+    <button mat-fab extended color="primary" (click)="onCreateTeam()" [disabled]="teamStore.teamsLoading()">
+      <mat-icon>add</mat-icon>
+      New Team
+    </button>
+  </div>
+
+  <!-- Error Alert -->
+  @if (teamStore.hasTeamsError()) {
+    <app-error-alert 
+      [message]="teamStore.teamsError() || 'Failed to load teams'"
+      (onRetry)="teamService.getTeams()"
+    />
+  }
+
+  <!-- Loading State -->
+  @if (teamStore.teamsLoading()) {
+    <app-loading-spinner message="Loading teams..." />
+  } @else {
+    <div class="teams-grid">
+      @for (team of teams(); track team.id) {
+      <mat-card class="team-card" (click)="onViewProjects(team.id!)">
+        <mat-card-header>
+          <div mat-card-avatar class="team-avatar">
+            <mat-icon>groups</mat-icon>
+          </div>
+          <mat-card-title>{{ team.name }}</mat-card-title>
+          <mat-card-subtitle>
+            <mat-icon class="small-icon">person</mat-icon>
+            {{ team.members?.length || 0 }} members
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          @if (team.members && team.members.length > 0) {
+            <div class="members-preview">
+              @for (member of team.members.slice(0, 3); track member) {
+                <div class="member-chip">
+                  <mat-icon>person</mat-icon>
+                </div>
+              }
+              @if (team.members.length > 3) {
+                <div class="member-chip more">+{{ team.members.length - 3 }}</div>
+              }
+            </div>
+          } @else {
+            <p class="no-members">No members yet</p>
+          }
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-icon-button matTooltip="Add Member" (click)="addMemberToTeam(team.id!); $event.stopPropagation()">
+            <mat-icon>person_add</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="View Projects" (click)="onViewProjects(team.id!); $event.stopPropagation()">
+            <mat-icon>folder_open</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Delete Team" color="warn" (click)="onDeleteTeam(team.id!); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        <mat-icon>groups</mat-icon>
+        <h2>No teams yet</h2>
+        <p>Create your first team to get started</p>
+        <button mat-raised-button color="primary" (click)="onCreateTeam()">
+          <mat-icon>add</mat-icon>
+          Create Team
+        </button>
+      </div>
+    }
+    </div>
+  }
+</div>

@@ -1,0 +1,27 @@
+<div dir="ltr" class="selection-container">
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ data.placeholder || 'Select an option' }}</mat-label>
+      <mat-select [(ngModel)]="selectedId">
+        @for (option of data.options; track option.id) {
+          <mat-option [value]="option.id">{{ option.label }}</mat-option>
+        } @empty {
+          <mat-option disabled>No options available</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+      {{ data.cancelText || 'Cancel' }}
+    </button>
+    <button mat-raised-button color="primary" 
+            (click)="onConfirm()" 
+            [disabled]="!selectedId">
+      {{ data.confirmText || 'Add' }}
+    </button>
+  </mat-dialog-actions>
+</div>

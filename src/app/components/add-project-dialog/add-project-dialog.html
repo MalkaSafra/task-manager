@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>add project</h2>
+
+<mat-dialog-content>
+  <mat-form-field style="width: 100%;">
+    <mat-label>team</mat-label>
+    <mat-select [(ngModel)]="teamId" placeholder="select a team">
+      @for (team of teams; track team.id) {
+        <mat-option [value]="team.id">{{ team.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>project name</mat-label>
+    <input matInput [(ngModel)]="name" placeholder="enter a project name" />
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;">
+    <mat-label>description (optional)</mat-label>
+    <textarea matInput [(ngModel)]="description" placeholder="enter a description" rows="3"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="getResult()" [disabled]="!teamId || !name">
+    add
+  </button>
+</mat-dialog-actions>

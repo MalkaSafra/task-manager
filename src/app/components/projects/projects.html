@@ -1,0 +1,91 @@
+<div class="page-container">
+  <!-- Breadcrumb -->
+  @if (currentTeam()) {
+    <div class="breadcrumb">
+      <a (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Teams
+      </a>
+      <mat-icon>chevron_right</mat-icon>
+      <span class="current">{{ currentTeam()?.name }}</span>
+    </div>
+  }
+
+  <div class="page-header">
+    <div class="header-content">
+      <h1>
+        @if (currentTeam()) {
+          {{ currentTeam()?.name }} - Projects
+        } @else {
+          All Projects
+        }
+      </h1>
+      <p class="subtitle">Organize your work into projects</p>
+    </div>
+    <button mat-fab extended color="primary" (click)="onCreateProject()" [disabled]="projectsStore.projectsLoading()">
+      <mat-icon>add</mat-icon>
+      New Project
+    </button>
+  </div>
+
+  <!-- Error Alert -->
+  @if (projectsStore.hasProjectsError()) {
+    <app-error-alert 
+      [message]="projectsStore.projectsError() || 'Failed to load projects'"
+      (onRetry)="projectService.getProjects()"
+    />
+  }
+
+  <!-- Loading State -->
+  @if (projectsStore.projectsLoading()) {
+    <app-loading-spinner message="Loading projects..." />
+  } @else {
+    <div class="projects-grid">
+      @for (project of projects(); track project.id) {
+      <mat-card class="project-card" (click)="onViewTasks(project.id!)">
+        <mat-card-header>
+          <div mat-card-avatar class="project-avatar">
+            <mat-icon>folder</mat-icon>
+          </div>
+          <mat-card-title>{{ project.name }}</mat-card-title>
+          <mat-card-subtitle>
+            @if (project.description) {
+              {{ project.description }}
+            } @else {
+              No description
+            }
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="project-info">
+            <div class="info-item">
+              <mat-icon>checklist</mat-icon>
+              <span>Click to view tasks</span>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-icon-button matTooltip="View Tasks" (click)="onViewTasks(project.id!); $event.stopPropagation()">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Delete Project" color="warn" (click)="onDeleteProject(project.id!); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        <mat-icon>folder_off</mat-icon>
+        <h2>No projects yet</h2>
+        <p>Create your first project to start organizing tasks</p>
+        <button mat-raised-button color="primary" (click)="onCreateProject()">
+          <mat-icon>add</mat-icon>
+          Create Project
+        </button>
+      </div>
+    }
+    </div>
+  }
+</div>

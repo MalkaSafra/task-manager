@@ -1,0 +1,164 @@
+.page-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-content h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  margin: 0 0 8px 0;
+}
+
+.header-content .subtitle {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.team-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 16px !important;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.team-avatar {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-avatar mat-icon {
+  color: white;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+mat-card-subtitle {
+  display: flex !important;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px !important;
+}
+
+.small-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+mat-card-content {
+  padding: 16px !important;
+  flex: 1;
+}
+
+.members-preview {
+  display: flex;
+  gap: 8px;
+}
+
+.member-chip {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e3f2fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1976d2;
+}
+
+.member-chip.more {
+  background: #667eea;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.no-members {
+  color: #999;
+  font-style: italic;
+  margin: 0;
+}
+
+mat-card-actions {
+  padding: 8px 16px !important;
+  border-top: 1px solid #eee;
+}
+
+/* Empty State */
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 16px;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.empty-state h2 {
+  margin: 0 0 8px 0;
+  color: #666;
+}
+
+.empty-state p {
+  margin: 0 0 24px 0;
+  color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .teams-grid {
+    grid-template-columns: 1fr;
+  }
+}

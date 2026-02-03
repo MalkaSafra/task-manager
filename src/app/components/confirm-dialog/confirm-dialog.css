@@ -1,0 +1,22 @@
+.dialog-container {
+  padding: 8px;
+}
+
+.dialog-title {
+  margin: 0;
+  font-weight: 500;
+}
+
+.dialog-content {
+  margin: 16px 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.dialog-actions {
+  padding-top: 12px;
+}
+.confirm-container {
+  border-left: 6px solid #d32f2f; 
+  padding-left: 15px;
+}

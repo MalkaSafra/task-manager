@@ -1,0 +1,23 @@
+<div class="dialog-container" dir="ltr">
+
+    <h2 mat-dialog-title class="dialog-title">
+    {{ data.title || 'Confirm Action' }}
+  </h2>
+
+  <mat-dialog-content class="dialog-content">
+    <p>{{ data.message || 'Are you sure you want to proceed?' }}</p>
+    
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button (click)="onCancel()">
+      {{ data.cancelText || 'Cancel' }}
+    </button>
+    
+    <button mat-raised-button 
+            [color]="data.color || 'primary'" 
+            (click)="onConfirm()">
+      {{ data.confirmText || 'Confirm' }}
+    </button>
+  </mat-dialog-actions>
+</div>
